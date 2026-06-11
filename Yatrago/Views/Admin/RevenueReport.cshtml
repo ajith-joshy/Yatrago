@@ -1,0 +1,60 @@
+﻿@model List<YatraGo.Models.RevenueReport>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="report-container">
+
+    <h1>
+        Revenue Report
+    </h1>
+
+    <table class="report-table">
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    Journey Date
+                </th>
+
+                <th>
+                    Total Bookings
+                </th>
+
+                <th>
+                    Revenue
+                </th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @(item.JourneyDate.ToString("dd-MM-yyyy"))
+                    </td>
+
+                    <td>
+                        @item.TotalBookings
+                    </td>
+
+                    <td>
+                        ₹@item.TotalRevenue
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

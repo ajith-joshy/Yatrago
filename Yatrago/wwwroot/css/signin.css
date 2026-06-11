@@ -1,0 +1,332 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-image: url('/images/signin.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* CONTAINER */
+
+.container {
+    width: 420px;
+    background: rgba(255,255,255,0.95);
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    margin: 80px auto;
+}
+
+/* HEADING */
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #111827;
+    font-size: 32px;
+}
+
+/* FORM GROUP */
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+/* LABEL */
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #374151;
+}
+
+/* INPUT */
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+}
+
+    input:focus {
+        border-color: #38bdf8;
+    }
+
+/* PASSWORD BOX */
+
+.password-box {
+    position: relative;
+}
+
+    .password-box span {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+/* SELECT */
+
+select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+    select:focus {
+        border-color: #38bdf8;
+    }
+
+/* ERROR */
+
+.error {
+    color: red;
+    font-size: 13px;
+}
+
+/* VALIDATION */
+
+.invalid {
+    border-color: red;
+}
+
+.valid {
+    border-color: green;
+}
+
+/* remember me*/
+.remember-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+    .remember-box input {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+
+    .remember-box label {
+        margin: 0;
+        cursor: pointer;
+    }
+
+/* BUTTON */
+
+button {
+    width: 100%;
+    padding: 11px;
+    font-size: 15px;
+}
+
+    button:hover {
+        background: #0056b3;
+    }
+
+/* LINKS */
+
+.link {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 15px;
+}
+
+    .link a {
+        text-decoration: none;
+        color: #2563eb;
+        margin-left: 5px;
+    }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+
+/* IMAGE CONTAINER */
+
+.img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* RESET PASSWORD */
+.password-box {
+    position: relative;
+}
+
+.password-strength {
+    position: absolute;
+    right: 45px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    color: #9ca3af;
+    pointer-events: none;
+}
+
+/* QUICK LOGIN */
+
+.quick-login-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+    .quick-login-header img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+.quick-login-dropdown {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.dropdown-btn {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    text-align: left;
+    font-size: 15px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    width: 100%;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-top: 5px;
+    z-index: 999;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.show-dropdown {
+    display: block;
+}
+
+.quick-user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+    .quick-user:last-child {
+        border-bottom: none;
+    }
+
+.quick-user-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+    .quick-user-link img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+    }
+
+.remove-user-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: red;
+    color: white;
+    cursor: pointer;
+}
+    .remove-user-btn:hover {
+        background: darkred;
+    }
+/* TABLET */
+
+@media(max-width:768px) {
+
+    .container {
+        max-width: 90%;
+        padding: 25px;
+        margin-top: 100px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:500px) {
+
+    body {
+        padding: 15px;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 20px;
+        margin-top: 90px;
+        border-radius: 10px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    input,
+    select {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    button {
+        padding: 11px;
+        font-size: 14px;
+    }
+
+    .password-box span {
+        font-size: 16px;
+        right: 12px;
+    }
+
+    .link {
+        font-size: 14px;
+    }
+}

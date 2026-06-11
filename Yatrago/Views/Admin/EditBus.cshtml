@@ -1,0 +1,172 @@
+﻿@model YatraGo.Models.Bus
+@using YatraGo.Models
+@{
+    Layout = "_AdminLayout";
+    var routes =
+    ViewBag.Routes as List<BusRoute>;
+}
+
+<div class="bus-page">
+
+    <div class="bus-form-section">
+
+        <h2>Edit Bus</h2>
+
+        <form method="post"
+              enctype="multipart/form-data"
+              class="bus-form">
+
+            <input type="hidden"
+                   asp-for="BusId">
+
+            <input type="hidden"
+                   asp-for="BusImage">
+
+            <!-- BUS NAME -->
+
+            <div class="bus-input-group">
+
+                <label>Bus Name</label>
+
+                <input type="text"
+                       asp-for="BusName">
+
+            </div>
+
+            <!-- BUS NUMBER -->
+
+            <div class="bus-input-group">
+
+                <label>Bus Number</label>
+
+                <input type="text"
+                       asp-for="BusNumber">
+
+            </div>
+
+            <!-- BUS TYPE -->
+
+            <div class="bus-input-group">
+
+                <label>Bus Type</label>
+
+                <select asp-for="BusType">
+
+                    <option value="AC Sleeper">
+                        AC Sleeper
+                    </option>
+
+                    <option value="Non-AC Sleeper">
+                        Non-AC Sleeper
+                    </option>
+
+                    <option value="AC Seater">
+                        AC Seater
+                    </option>
+
+                    <option value="Non-AC Seater">
+                        Non-AC Seater
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- TOTAL SEATS -->
+
+            <div class="bus-input-group">
+
+                <label>Total Seats</label>
+
+                <input type="number"
+                       asp-for="TotalSeats">
+
+            </div>
+
+            <!-- ROUTE -->
+
+            <div class="bus-input-group">
+
+                <label>Route</label>
+
+                <select asp-for="RouteId">
+
+                    @foreach (var route in routes)
+                    {
+                        <option value="@route.RouteId">
+
+                            @route.Source
+                            →
+                            @route.Destination
+
+                        </option>
+                    }
+
+                </select>
+
+            </div>
+
+            <!-- DEPARTURE -->
+
+            <div class="bus-input-group">
+
+                <label>Departure Time</label>
+
+                <input type="time"
+                       asp-for="DepartureTime">
+
+            </div>
+
+            <!-- ARRIVAL -->
+
+            <div class="bus-input-group">
+
+                <label>Arrival Time</label>
+
+                <input type="time"
+                       asp-for="ArrivalTime">
+
+            </div>
+
+            <!-- Image -->
+            <div class="bus-input-group">
+
+                <label>
+                    Bus Image
+                </label>
+
+                <input type="file"
+                       name="imageFile"
+                       accept=".jpg,.jpeg,.png">
+
+            </div>
+
+            <!-- FARE -->
+
+            <div class="bus-input-group">
+
+                <label>Fare Amount</label>
+
+                <input type="number"
+                       step="0.01"
+                       asp-for="FareAmount">
+
+            </div>
+
+            <!-- BUTTON -->
+
+            <div class="bus-button-group">
+
+                <button type="submit">
+
+                    Update Bus
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

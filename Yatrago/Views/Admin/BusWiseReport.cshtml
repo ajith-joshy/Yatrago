@@ -1,0 +1,122 @@
+﻿@model List<YatraGo.Models.BusWiseReport>
+
+@using YatraGo.Models
+
+@{
+    Layout = "_AdminLayout";
+
+    var buses =
+    ViewBag.Buses as List<Bus>;
+}
+
+<div class="report-container">
+
+    <h1>
+        Bus Wise Report
+    </h1>
+
+    <form method="post"
+          class="report-form"
+          onsubmit="return validateBusWiseReport()">
+
+        <div class="input-group">
+
+            <select id="busId"
+                    name="busId">
+
+                <option value="">
+                    Select Bus
+                </option>
+
+                @foreach (var bus in buses)
+                {
+                    <option value="@bus.BusId">
+                        @bus.BusName
+                    </option>
+                }
+
+            </select>
+
+            <span id="busError"
+                  class="error"></span>
+
+        </div>
+
+        <button type="submit">
+
+            Search
+
+        </button>
+
+    </form>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="table-container">
+
+            <table class="report-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Passenger</th>
+
+                        <th>Age</th>
+
+                        <th>Gender</th>
+
+                        <th>Seat</th>
+
+                        <th>Bus</th>
+
+                        <th>Journey Date</th>
+
+                        <th>Username</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>@item.PassengerName</td>
+
+                            <td>@item.Age</td>
+
+                            <td>@item.Gender</td>
+
+                            <td>@item.SeatNumber</td>
+
+                            <td>@item.BusName</td>
+
+                            <td>
+                                @item.JourneyDate.ToString("dd-MM-yyyy")
+                            </td>
+
+                            <td>@item.Username</td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    }
+    else if (ViewBag.SearchPerformed == true)
+    {
+        <p class="no-results">
+
+            No results found
+
+        </p>
+    }
+
+</div>
+<script src="~/js/report.js"></script>

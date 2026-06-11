@@ -1,0 +1,229 @@
+﻿@model YatraGo.Models.User
+
+@{
+    Layout = "_UserLayout";
+}
+
+@if (TempData["Message"] != null)
+{
+    <script>
+
+        alert('@TempData["Message"]');
+
+    </script>
+}
+
+<div class="profile-container">
+
+    <h1>Edit Profile</h1>
+
+    <form method="post"
+          enctype="multipart/form-data"
+          onsubmit="return validateEditProfile()">
+
+        <div class="profile-image-section">
+
+            @if (!string.IsNullOrEmpty(Model.ProfileImage))
+            {
+                <img src="@Model.ProfileImage"
+                     class="profile-image" />
+            }
+
+            else
+            {
+                <img src="/images/default-user.png"
+                     class="profile-image" />
+            }
+
+            <input type="file"
+                   name="profilePhoto" />
+
+        </div>
+
+        <div class="profile-form-group">
+            <label>First Name</label>
+            <input asp-for="FirstName"
+                   id="firstName" />
+            <span class="error"
+                  id="firstNameError"></span>
+        </div>
+
+        <div class="profile-form-group">
+            <label>Last Name</label>
+            <input asp-for="LastName"
+                   id="lastName" />
+            <span class="error"
+                  id="lastNameError"></span>
+        </div>
+
+        <div class="profile-form-group">
+            <label>Address</label>
+            <textarea asp-for="Address"
+                      id="address"></textarea>
+            <span class="error"
+                  id="addressError"></span>
+        </div>
+
+        <div class="profile-form-group">
+            <label>Email</label>
+            <input asp-for="Email"
+                   id="email" />
+            <span class="error"
+                  id="emailError"></span>
+        </div>
+
+        <div class="profile-form-group">
+            <label>Phone</label>
+            <input asp-for="Phone"
+                   id="phone" />
+            <span class="error"
+                  id="phoneError"></span>
+        </div>
+
+        <div class="profile-form-group">
+            <label>Date of Birth</label>
+            <input type="date"
+                   asp-for="DOB"
+                   id="date" />
+            <span class="error"
+                  id="DOBError"></span>
+        </div>
+
+        <div class="profile-form-group">
+
+            <label>Gender</label>
+
+            <select asp-for="Gender"
+                    id="gender">
+
+                <option value="">
+                    Select Gender
+                </option>
+
+                <option value="Male">
+                    Male
+                </option>
+
+                <option value="Female">
+                    Female
+                </option>
+
+            </select>
+
+            <span class="error"
+                  id="genderError"></span>
+        </div>
+
+        <div class="profile-form-group">
+
+            <label>State</label>
+
+            <select asp-for="StateId"
+                    id="state">
+
+                <option value="">
+                    Select State
+                </option>
+
+                @foreach (var state in ViewBag.States)
+                {
+                    <option value="@state.StateId">
+
+                        @state.StateName
+
+                    </option>
+                }
+
+            </select>
+
+            <span class="error"
+                  id="stateError"></span>
+
+        </div>
+
+        <div class="profile-form-group">
+
+            <label>City</label>
+
+            <select asp-for="CityId"
+                    id="city">
+
+                <option value="">
+                    Select City
+                </option>
+
+                @foreach (var city in ViewBag.Cities)
+                {
+                    <option value="@city.CityId">
+
+                        @city.CityName
+
+                    </option>
+                }
+
+            </select>
+
+            <span class="error"
+                  id="cityError"></span>
+
+        </div>
+
+        <button type="submit"
+                class="update-btn">
+
+            Update Profile
+
+        </button>
+
+    </form>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js">
+</script>
+
+<script src="~/js/editprofile.js"></script>
+
+<script>
+
+    $("#state").change(function ()
+    {
+    var stateId =
+    $(this).val();
+
+    $.ajax(
+    {
+    url: '/Account/GetCitiesByStateId',
+
+    type: 'GET',
+
+    data:
+    {
+    stateId: stateId
+    },
+
+    success: function (cities)
+    {
+    $("#city").empty();
+
+    $("#city").append
+    (
+    '<option value="">Select City</option>'
+    );
+
+    $.each(cities, function (i, city)
+    {
+    $("#city").append
+    (
+    '<option value="' +
+    city.cityId +
+    '">' +
+    city.cityName +
+    '</option>'
+    );
+    });
+    }
+    });
+    });
+
+</script>

@@ -1,0 +1,54 @@
+﻿@model List<YatraGo.Models.Passenger>
+
+@{
+    Layout = "_UserLayout";
+}
+
+<h1>Passenger Details</h1>
+
+<table class="bus-table">
+
+    <thead>
+
+        <tr>
+
+            <th>Name</th>
+
+            <th>Age</th>
+
+            <th>Gender</th>
+
+            <th>Seat</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        @foreach (var passenger in Model)
+        {
+            <tr>
+
+                <td>
+                    @passenger.PassengerName
+                </td>
+
+                <td>
+                    @passenger.Age
+                </td>
+
+                <td>
+                    @passenger.Gender
+                </td>
+
+                <td>
+                    @passenger.SeatNumber
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>

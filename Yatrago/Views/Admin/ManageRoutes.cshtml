@@ -1,0 +1,125 @@
+﻿@model List<YatraGo.Models.BusRoute>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="route-container">
+
+    <!-- ADD ROUTE FORM -->
+
+    <div class="form-section">
+
+        <h2>Add Route</h2>
+
+        <form method="post"
+              asp-action="AddRoute"
+              asp-controller="Admin"
+              onsubmit="return validateRouteForm()">
+
+            <!-- SOURCE -->
+
+            <input type="text"
+                   id="source"
+                   name="Source"
+                   placeholder="From">
+
+            <span class="error"
+                  id="sourceError">
+            </span>
+
+            <!-- DESTINATION -->
+
+            <input type="text"
+                   id="destination"
+                   name="Destination"
+                   placeholder="To">
+
+            <span class="error"
+                  id="destinationError">
+            </span>
+
+            <!-- DISTANCE -->
+
+            <input type="text"
+                   id="distance"
+                   name="Distance"
+                   placeholder="Distance">
+
+            <span class="error"
+                  id="distanceError">
+            </span>
+
+            <button type="submit">
+                Add Route
+            </button>
+
+        </form>
+
+    </div>
+    
+    <!-- ROUTES TABLE -->
+
+    <div class="table-section">
+
+        <h2>Added Routes</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th>Distance</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @foreach (var route in Model)
+                {
+                    <tr>
+
+                        <td>@route.Source</td>
+                        <td>@route.Destination</td>
+                        <td>@route.Distance KM</td>
+
+                        <td>
+                        <div class="action-buttons">
+                            <a asp-action="EditRoute"
+                               asp-route-id="@route.RouteId"
+                               class="operations-btn">
+                                Edit
+                            </a>
+                            <a asp-action="DeleteRoute"
+                               asp-route-routeId="@route.RouteId"
+                               onclick="return confirm('Delete this route?')"
+                               class="operations-btn">
+                                Delete
+                            </a>
+                        </div>
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
+@if (TempData["Message"] != null)
+{
+    <script>
+        alert("@TempData["Message"]");
+    </script>
+}
+
+<script src="~/js/addroute.js"></script>

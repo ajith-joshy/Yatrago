@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    @{
+        Context.Response.Headers["Cache-Control"] =
+        "no-cache, no-store, must-revalidate";
+
+        Context.Response.Headers["Pragma"] =
+        "no-cache";
+
+        Context.Response.Headers["Expires"] =
+        "0";
+    }
+
+    <title>Admin Panel</title>
+
+    <link rel="stylesheet"
+          href="~/css/admin.css">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <div class="top-navbar">
+
+        <div class="logo-section">
+
+            <img src="/images/logo.jpg"
+                 alt="logo">
+
+            <h2>YatraGo</h2>
+
+        </div>
+
+        <div class="admin-section">
+
+            <span>
+                Welcome
+                @Context.Session.GetString("AdminUsername")
+            </span>
+
+            <a asp-controller="Account"
+               asp-action="Logout">
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN CONTAINER -->
+
+    <div class="main-container">
+
+        <!-- SIDEBAR -->
+
+        <div class="sidebar">
+
+            <a asp-controller="Admin"
+               asp-action="Dashboard">
+                Dashboard
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="ManageUsers">
+                Manage Users
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="ManageBuses">
+                Manage Buses
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="ManageRoutes">
+                Manage Routes
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="ManageBookings">
+                Manage Bookings
+            </a>
+
+            <!-- REPORTS -->
+
+            <li class="dropdown">
+
+                <a href="javascript:void(0)"
+                   class="dropdown-toggle">
+
+                    Reports ▼
+
+                </a>
+
+                <ul class="dropdown-menu">
+
+                    <!-- Booking Reports -->
+
+                    <li class="submenu">
+
+                        <a href="javascript:void(0)">
+
+                            Booking Reports ▶
+
+                        </a>
+
+                        <ul class="submenu-menu">
+
+                            <li>
+
+                                <a asp-controller="Admin"
+                                   asp-action="BusWiseReport">
+
+                                    Bus Wise Report
+
+                                </a>
+
+                            </li>
+
+                            <li>
+
+                                <a asp-controller="Admin"
+                                   asp-action="DateWiseReport">
+
+                                    Date Wise Report
+
+                                </a>
+
+                            </li>
+
+                        </ul>
+
+                    </li>
+
+                    <!-- Revenue Reports -->
+
+                    <li class="submenu">
+
+                        <a href="javascript:void(0)">
+
+                            Revenue Reports ▶
+
+                        </a>
+
+                        <ul class="submenu-menu">
+
+                            <li>
+
+                                <a asp-controller="Admin"
+                                   asp-action="RevenueReport">
+
+                                    Revenue Report
+
+                                </a>
+
+                            </li>
+
+                        </ul>
+
+                    </li>
+
+                </ul>
+
+            </li>
+
+
+        </div>
+
+        <!-- PAGE CONTENT -->
+
+        <div class="content">
+
+            @RenderBody()
+
+        </div>
+
+    </div>
+
+    <script src="~/js/adminlayout.js"></script>
+
+</body>
+
+</html>

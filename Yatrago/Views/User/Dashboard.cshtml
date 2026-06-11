@@ -1,0 +1,137 @@
+﻿@{
+    Layout = "_UserLayout";
+}
+
+<h1>
+    Welcome to YatraGo
+</h1>
+
+<!-- SEARCH BOX -->
+
+<div class="search-box">
+
+    <h2>
+        Search Buses
+    </h2>
+
+    <form method="post"
+          asp-action="SearchBus"
+          asp-controller="User"
+          onsubmit="return validateSearch()"
+          novalidate>
+
+        <div class="search-fields">
+
+            <div class="input-group">
+
+                <input type="text"
+                       id="source"
+                       name="source"
+                       placeholder="From">
+
+                <span class="error"
+                      id="sourceError"></span>
+
+            </div>
+
+            <div class="input-group">
+
+                <input type="text"
+                       id="destination"
+                       name="destination"
+                       placeholder="To">
+
+                <span class="error"
+                      id="destinationError"></span>
+
+            </div>
+
+            <div class="input-group">
+
+                <input type="date"
+                       id="journeyDate"
+                       name="journeyDate">
+
+                <span class="error"
+                      id="dateError"></span>
+
+            </div>
+
+            <button type="submit">
+                Search
+            </button>
+        </div>
+    </form>
+
+</div>
+
+<!-- CARDS -->
+
+<div class="card">
+
+    <h3>
+        Upcoming Bookings
+    </h3>
+
+    <div class="booking-count">
+        @ViewBag.UpcomingBookings
+    </div>
+
+</div>
+
+
+<div class="live-buses-section">
+
+    <h2>Live Buses</h2>
+
+    <table class="live-buses-table">
+
+        <thead>
+
+            <tr>
+                <th>Bus Name</th>
+
+                <th>Type</th>
+
+                <th>Total Seats</th>
+
+                <th>Route</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @if (ViewBag.LiveBuses != null)
+            {
+                foreach (var bus in ViewBag.LiveBuses)
+                {
+                    <tr>
+
+                        <td>
+                            @bus.BusName
+                        </td>
+
+                        <td>
+                            @bus.BusType
+                        </td>
+
+                        <td>
+                            @bus.TotalSeats
+                        </td>
+
+                        <td>
+                            @bus.Source → @bus.Destination
+                        </td>
+
+                    </tr>
+                }
+            }
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<script src="~/js/searchbus.js"></script>

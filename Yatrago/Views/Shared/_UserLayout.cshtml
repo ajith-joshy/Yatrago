@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+@{
+    Context.Response.Headers["Cache-Control"] =
+    "no-cache, no-store, must-revalidate";
+
+    Context.Response.Headers["Pragma"] =
+    "no-cache";
+
+    Context.Response.Headers["Expires"] =
+    "0";
+}
+
+<head>
+
+    <title>
+        YatraGo
+    </title>
+
+    <link rel="stylesheet"
+          href="~/css/user.css" />
+
+</head>
+
+<body>
+
+    <!-- TOP NAVBAR -->
+
+    <div class="top-navbar">
+
+        <!-- LOGO -->
+
+        <div class="logo-section">
+
+            <img src="/images/logo.jpg"
+                 alt="logo">
+
+            <h2>
+                YatraGo
+            </h2>
+
+        </div>
+
+        <!-- NAVBAR RIGHT -->
+
+        <div class="navbar-right">
+
+            <!-- USER SECTION -->
+
+            <div class="user-section">
+
+                <span>
+                    Welcome
+                    @Context.Session.GetString("Username")
+                </span>
+
+                <a asp-controller="Account"
+                   asp-action="Logout">
+
+                    Logout
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN CONTAINER -->
+
+    <div class="main-container">
+
+        <!-- SIDEBAR -->
+
+        <div class="sidebar">
+
+            <a href="/User/Dashboard">
+                Dashboard
+            </a>
+
+            <a asp-controller="User"
+               asp-action="MyBookings">
+                My Bookings
+            </a>
+
+            <a asp-controller="User"
+               asp-action="EditProfile">
+                Profile
+            </a>
+
+        </div>
+
+        <!-- PAGE CONTENT -->
+
+        <div class="content">
+
+            @RenderBody()
+
+        </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

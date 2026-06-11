@@ -1,0 +1,115 @@
+﻿@model List<YatraGo.Models.Booking>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<h1>Manage Bookings</h1>
+
+<div class="table-container">
+
+    <table class="bus-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Booking ID</th>
+
+                <th>User</th>
+
+                <th>Bus</th>
+
+                <th>Route</th>
+
+                <th>Journey Date</th>
+
+                <th>Seats</th>
+
+                <th>Amount</th>
+
+                <th>Status</th>
+
+                <th>Passengers</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @if (Model.Count > 0)
+            {
+                @foreach (var booking in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @booking.BookingId
+                        </td>
+
+                        <td>
+                            @booking.Username
+                        </td>
+
+                        <td>
+                            @booking.BusName
+                            <br />
+                            (@booking.BusNumber)
+                        </td>
+
+                        <td>
+                            @booking.Source
+                            →
+                            @booking.Destination
+                        </td>
+
+                        <td>
+                            @booking.JourneyDate.ToString("dd-MM-yyyy")
+                        </td>
+
+                        <td>
+                            @booking.SeatNumbers
+                        </td>
+
+                        <td>
+                            ₹ @booking.TotalAmount
+                        </td>
+
+                        <td>
+                            @booking.BookingStatus
+                        </td>
+
+                        <td>
+                        <div class="action-buttons">
+                            <a asp-controller="Admin"
+                               asp-action="PassengerList"
+                               asp-route-bookingId="@booking.BookingId"
+                               class="operations-btn">
+                                View
+                            </a>
+                        </div>
+                        </td>
+
+                    </tr>
+                }
+            }
+
+            else
+            {
+                <tr>
+
+                    <td colspan="9">
+
+                        No bookings found.
+
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

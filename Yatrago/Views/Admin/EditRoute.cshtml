@@ -1,0 +1,34 @@
+﻿@model YatraGo.Models.BusRoute
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="form-section">
+
+    <h2>Edit Route</h2>
+
+    <form method="post">
+
+        <input type="hidden"
+               asp-for="RouteId">
+
+        <input type="text"
+               asp-for="Source">
+
+        <input type="text"
+               asp-for="Destination">
+
+        <input type="number"
+               asp-for="Distance"
+               class="no-spinner">
+
+        <button type="submit">
+
+            Update Route
+
+        </button>
+
+    </form>
+
+</div>

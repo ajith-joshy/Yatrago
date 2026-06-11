@@ -1,0 +1,151 @@
+﻿@model YatraGo.Models.LoginViewModel
+@await Html.PartialAsync("_Navbar")
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="~/css/signin.css">
+</head>
+
+<body>
+    <div class="container">
+        @if (TempData["Message"] != null)
+        {
+            <script>
+                alert('@TempData["Message"]');
+            </script>
+        }
+
+        @if (ViewBag.Message != null)
+        {
+            <p style="
+                color:red;
+                text-align:center;
+                margin-bottom:15px;
+                ">
+                @ViewBag.Message
+            </p>
+        }
+        <h2>Sign In</h2>
+
+        <form id="loginForm"
+              method="post"
+              asp-action="SignIn"
+              asp-controller="Account"
+              onsubmit="return validateLogin()"
+              novalidate>
+
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text"
+                       id="loginUser"
+                       asp-for="Username">
+                <span class="error"
+                      id="loginUserError"></span>
+            </div>
+
+        @if(ViewBag.RememberedUsers != null)
+{
+    var rememberedUsers =
+    ViewBag.RememberedUsers
+    as List<YatraGo.Models.RememberedLogin>;
+
+    if(rememberedUsers.Count > 0)
+    {
+        <div class="quick-login-box">
+
+            <div class="quick-login-header">
+
+                <img src="/images/profile/pro.jpg"
+                     alt="profile" />
+
+                <label>
+                    Quick Login
+                </label>
+
+            </div>
+
+                        <div class="quick-login-dropdown">
+
+                            <button type="button"
+                                    class="dropdown-btn"
+                                    onclick="toggleQuickLoginDropdown()">
+
+                                Select Account ▼
+
+                            </button>
+
+                            <div id="quickLoginMenu"
+                                 class="dropdown-content">
+
+                                @foreach (var user in rememberedUsers)
+                                {
+                                    <div class="quick-user">
+
+                                        <a href="/Account/QuickLogin?username=@user.Username&role=@user.Role"
+                                           class="quick-user-link">
+
+                                            <img src="/images/profile/pro.jpg"
+                                                 alt="profile" />
+
+                                            <span>
+                                                @user.Username
+                                            </span>
+
+                                        </a>
+
+                                        <button type="button"
+                                                class="remove-user-btn"
+                                                onclick="removeQuickLogin('@user.Username')">
+                                            ✖
+                                        </button>
+
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+        </div>
+    }
+}
+            
+            <div class="form-group">
+                <label>Password</label>
+                <div class="password-box">
+                    <input type="password"
+                           id="loginPassword"
+                           asp-for="Password">
+                    <span onclick="togglePassword()">👁</span>
+                </div>
+                <span class="error" id="loginPasswordError"></span>
+            </div>
+
+            <div class="remember-box">
+                <input type="checkbox"
+                       asp-for="RememberMe" />
+                <label>
+                    Remember Me
+                </label>
+            </div><br>
+
+            <button type="submit">Sign In</button>
+            
+            <p class="link">
+                <a href="/Account/ForgotPassword">
+                Forgot password?
+                </a>
+            </p>
+
+            <p class="link">
+                Don't have an account?<a href="/Account/SignUp">Signup</a>
+            </p>
+
+        </form>
+    </div>
+    <script src="~/js/signin.js"></script>
+</body>
+</html>

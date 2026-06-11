@@ -1,0 +1,98 @@
+﻿@model List<YatraGo.Models.User>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<h1>Manage Users</h1>
+
+<div class="table-container">
+
+    <table class="bus-table">
+
+        <thead>
+
+            <tr>
+
+                <th>User ID</th>
+
+                <th>Username</th>
+
+                <th>First Name</th>
+
+                <th>Last Name</th>
+
+                <th>Email</th>
+
+                <th>Phone</th>
+
+                <th>Gender</th>
+
+                <th>DOB</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @if (Model.Count > 0)
+            {
+                @foreach (var user in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @user.UserId
+                        </td>
+
+                        <td>
+                            @user.Username
+                        </td>
+
+                        <td>
+                            @user.FirstName
+                        </td>
+
+                        <td>
+                            @user.LastName
+                        </td>
+
+                        <td>
+                            @user.Email
+                        </td>
+
+                        <td>
+                            @user.Phone
+                        </td>
+
+                        <td>
+                            @user.Gender
+                        </td>
+
+                        <td>
+                            @user.DOB.ToString("dd-MM-yyyy")
+                        </td>
+
+                    </tr>
+                }
+            }
+
+            else
+            {
+                <tr>
+
+                    <td colspan="8">
+
+                        No users found.
+
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

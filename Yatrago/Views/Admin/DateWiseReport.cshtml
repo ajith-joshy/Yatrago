@@ -1,0 +1,108 @@
+﻿@model List<YatraGo.Models.DateWiseReport>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="report-container">
+
+    <h1>
+        Date Wise Report
+    </h1>
+
+    <form method="post"
+          class="report-form"
+          onsubmit="return validateDateWiseReport()">
+
+    <div class="input-group">
+
+        <input type="date"
+               id="journeyDate"
+               name="journeyDate">
+
+        <span id="dateError"
+              class="error"></span>
+
+    </div>
+
+        <button type="submit">
+
+            Search
+
+        </button>
+
+    </form>
+
+    @if (Model != null && Model.Count > 0)
+    {
+
+        <div class="table-container">
+
+            <table class="report-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Booking Id</th>
+
+                        <th>Username</th>
+
+                        <th>Bus Name</th>
+
+                        <th>Source</th>
+
+                        <th>Destination</th>
+
+                        <th>Seats</th>
+
+                        <th>Total Amount</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>@item.BookingId</td>
+
+                            <td>@item.Username</td>
+
+                            <td>@item.BusName</td>
+
+                            <td>@item.Source</td>
+
+                            <td>@item.Destination</td>
+
+                            <td>@item.SeatNumbers</td>
+
+                            <td>₹ @item.TotalAmount</td>
+
+                            <td>@item.BookingStatus</td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    }
+    else if (Model != null)
+    {
+        <p class="no-results">
+
+            No results found
+
+        </p>
+    }
+
+</div>
+<script src="~/js/report.js"></script>

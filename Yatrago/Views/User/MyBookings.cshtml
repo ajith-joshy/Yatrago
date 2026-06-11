@@ -1,0 +1,147 @@
+﻿@model List<YatraGo.Models.Booking>
+
+@{
+    Layout = "_UserLayout";
+}
+
+@if (TempData["Message"] != null)
+{
+    <script>
+
+        alert('@TempData["Message"]');
+
+    </script>
+}
+
+<h1>My Bookings</h1>
+
+<div class="table-container">
+
+    <table class="bus-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Bus</th>
+
+                <th>Route</th>
+
+                <th>Journey Date</th>
+
+                <th>Seats</th>
+
+                <th>Total Amount</th>
+
+                <th>Status</th>
+
+                <th>Passengers</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @if (Model.Count > 0)
+            {
+                @foreach (var booking in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @booking.BusName
+                            <br />
+                            (@booking.BusNumber)
+                        </td>
+
+                        <td>
+                            @booking.Source
+                            →
+                            @booking.Destination
+                        </td>
+
+                        <td>
+                            @booking.JourneyDate.ToString("dd-MM-yyyy")
+                        </td>
+
+                        <td>
+                            @booking.SeatNumbers
+                        </td>
+
+                        <td>
+                            ₹ @booking.TotalAmount
+                        </td>
+
+                        <td>
+                            @booking.BookingStatus
+                        </td>
+
+                        <td>
+                            <a asp-action="PassengerList"
+                               asp-controller="User"
+                               asp-route-bookingId="@booking.BookingId"
+                               class="details-btn">
+                                View Passengers
+                            </a>
+                        </td>
+
+                        <td>
+
+                            @if (booking.BookingStatus != "Cancelled")
+                            {
+                                <div class="actions-container">
+
+                                    <a asp-action="Ticket"
+                                       asp-route-bookingId="@booking.BookingId"
+                                       class="ticket-btn">
+
+                                        View Ticket
+
+                                    </a>
+
+                                    <form method="post"
+                                          asp-action="CancelBooking">
+
+                                        <input type="hidden"
+                                               name="bookingId"
+                                               value="@booking.BookingId" />
+
+                                        <button type="submit"
+                                                class="cancel-btn"
+                                                onclick="return confirm('Cancel this booking?')">
+
+                                            Cancel
+
+                                        </button>
+
+                                    </form>
+
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="cancelled-text">
+                                    Cancelled
+                                </span>
+                            }
+
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6">
+                        No bookings found.
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>

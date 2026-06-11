@@ -1,0 +1,221 @@
+﻿@model YatraGo.Models.BookingViewModel
+
+@{
+    Layout = "_UserLayout";
+}
+
+<div class="passenger-container">
+
+    <h1>Passenger Details</h1>
+
+    <form method="post"
+          id="bookingForm"
+          asp-action="ConfirmBooking"
+          asp-controller="User"
+          onsubmit="return validatePassengerForm()">
+
+        <input type="hidden" asp-for="BusId" />
+
+        <input type="hidden" asp-for="JourneyDate" />
+
+        <input type="hidden" asp-for="SeatNumbers" />
+
+        <div class="passenger-form-group">
+            <label>Email</label>
+            <input type="email"
+                   asp-for="Email"
+                   id="Email"
+                   onblur="
+            validatePassengerEmail()" />
+            <span id="emailError"
+                  class="error-message">
+            </span>
+        </div>
+
+        <div class="passenger-form-group">
+            <label>Phone</label>
+            <input type="text"
+                   asp-for="Phone"
+                   id="Phone"
+                   onblur="
+            validatePassengerPhone()" />
+            <span id="phoneError"
+                  class="error-message">
+            </span>
+        </div>
+
+        <div class="fare-box">
+            <h3>
+                Total Fare:
+                ₹ @Model.TotalAmount
+            </h3>
+        </div>
+
+        @for (int i = 0; i < Model.Passengers.Count; i++)
+        {
+            <div class="passenger-card">
+
+                <h3>
+                    Passenger @(i + 1)
+                </h3>
+
+                <input type="hidden"
+                       asp-for="Passengers[i].SeatNumber" />
+
+                <p>
+                    <strong>Seat:</strong>
+                    @Model.Passengers[i].SeatNumber
+                </p><br>
+
+                <div class="passenger-form-group">
+                    <label>Name</label>
+                    <input asp-for="Passengers[i].PassengerName"
+                           id="PassengerName_@i"
+                           onblur="
+                    validatePassengerName(@i)" />
+                    <span id="passengerNameError_@i"
+                          class="error-message">
+                    </span>
+                </div>
+
+                <div class="passenger-form-group">
+                    <label>Age</label>
+                    <input type="number"
+                           asp-for="Passengers[i].Age"
+                           id="PassengerAge_@i"
+                           onblur="
+                    validatePassengerAge(@i)" />
+                    <span id="passengerAgeError_@i"
+                          class="error-message">
+                    </span>
+                </div>
+
+                <div class="gender-group">
+                    <label><b>Gender</b></label><br />
+                    <label>
+                        <input type="radio"
+                               name="Passengers[@i].Gender"
+                               value="Male"
+                               onchange="
+                        validatePassengerGender(@i)" />
+                        Male
+                    </label>
+
+                    <label>
+                        <input type="radio"
+                               name="Passengers[@i].Gender"
+                               value="Female"
+                               onchange="
+                        validatePassengerGender(@i)" />
+                        Female
+                    </label>
+                    
+                    <label>
+                        <input type="radio"
+                               name="Passengers[@i].Gender"
+                               value="Other"
+                               onchange="
+                        validatePassengerGender(@i)" />
+                        Other
+                    </label>
+                </div>
+                <span id="passengerGenderError_@i"
+                      class="error-message">
+                </span>
+
+            </div>
+        }
+
+        <button type="submit"
+                class="confirm-btn"
+                id="confirmBtn">
+
+            Confirm Booking
+
+        </button>
+
+    </form>
+
+</div>
+<script src="~/js/passenger.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    $(document).ready(function ()
+    {
+    $("#bookingForm").submit(function (e)
+    {
+    e.preventDefault();
+
+    let button =
+    $("#confirmBtn");
+
+    // Prevent double click
+    button.prop
+    (
+    "disabled",
+    true
+    );
+
+    button.text
+    (
+    "Processing..."
+    );
+
+    $.ajax(
+    {
+    url: '/User/ConfirmBooking',
+
+    type: 'POST',
+
+    data: $(this).serialize(),
+
+    success: function (response)
+    {
+    alert(response.message);
+
+    if (response.success)
+    {
+    window.location.href =
+    '/User/Dashboard';
+    }
+    else
+    {
+    // Re-enable button if booking failed
+    button.prop
+    (
+    "disabled",
+    false
+    );
+
+    button.text
+    (
+    "Confirm Booking"
+    );
+    }
+    },
+
+    error: function ()
+    {
+    alert
+    (
+    "Something went wrong."
+    );
+
+    // Re-enable button
+    button.prop
+    (
+    "disabled",
+    false
+    );
+
+    button.text
+    (
+    "Confirm Booking"
+    );
+    }
+    });
+    });
+    });
+
+</script>

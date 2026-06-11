@@ -1,0 +1,157 @@
+﻿@model YatraGo.Models.Bus
+
+@{
+    Layout = "_UserLayout";
+}
+
+@if (TempData["Message"] != null)
+{
+    <script>
+
+        alert('@TempData["Message"]');
+
+    </script>
+}
+<h1>
+    Select Seats
+</h1>
+
+<div class="bus-info">
+
+    <h2>
+        @Model.BusName
+    </h2>
+
+    <p>
+        Total Seats:
+        @Model.TotalSeats
+    </p>
+
+    <p>
+        Fare Per Seat:
+        ₹ @Model.FareAmount
+    </p>
+
+    <button type="button"
+            class="continue-btn"
+            onclick="viewBusImage('@Url.Content("~" + Model.BusImage)')">
+        View Bus Image
+    </button>
+
+</div>
+
+<form method="post"
+      asp-action="PassengerDetails"
+      asp-controller="User">
+
+    <input type="hidden"
+           name="BusId"
+           value="@Model.BusId" />
+
+    <input type="hidden"
+           name="journeyDate"
+           value="@Convert.ToDateTime(ViewBag.JourneyDate).ToString("yyyy-MM-dd")" />
+
+    <input type="hidden"
+           id="selectedSeats"
+           name="SeatNumbers" />
+
+    <div class="bus-layout">
+        @{
+            var bookedSeats =
+            ViewBag.BookedSeats
+            as List<string>
+            ?? new List<string>();
+        }
+        @for (int i = 1; i <= Model.TotalSeats; i++)
+        {
+            bool isBooked =
+            bookedSeats.Contains
+            (
+                i.ToString()
+            );
+
+            <div class="seat
+                @(isBooked ? "booked" : "")"
+
+                @if (!isBooked)
+                {
+                    <text>
+                        onclick="toggleSeat(this)"
+                    </text>
+                }
+
+                 data-seat="@i">
+
+                <span>
+                    @i
+                </span>
+
+            </div>
+
+            @if (i % 3 == 1)
+            {
+                <div class="aisle"></div>
+            }
+        }
+
+    </div>
+
+    <button type="submit"
+            class="continue-btn">
+
+        Continue Booking
+
+    </button>
+
+</form>
+
+<!-- IMAGE MODAL -->
+
+<div id="imageModal"
+     class="image-modal">
+
+    <span class="close-modal"
+          onclick="closeImageModal()">
+
+        &times;
+
+    </span>
+
+    <img id="modalImage"
+         class="modal-image"
+         src=""
+         alt="Bus Image">
+
+</div>
+
+<script src="/js/addbus.js"></script>
+
+<script>
+
+    let selected = [];
+
+    function toggleSeat(seat)
+    {
+        const seatNo =
+        seat.getAttribute("data-seat");
+
+        seat.classList.toggle("selected");
+
+        if(selected.includes(seatNo))
+        {
+            selected =
+            selected.filter(s => s !== seatNo);
+        }
+        else
+        {
+            selected.push(seatNo);
+        }
+
+        document.getElementById
+        (
+            "selectedSeats"
+        ).value = selected.join(",");
+    }
+
+</script>

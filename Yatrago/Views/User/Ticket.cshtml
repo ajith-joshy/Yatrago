@@ -1,0 +1,129 @@
+﻿@model YatraGo.Models.TicketViewModel
+
+@{
+    Layout = "_UserLayout";
+}
+
+@if (Model == null)
+{
+    <h2>
+        Ticket not found
+    </h2>
+
+    return;
+}
+
+<div class="ticket-container">
+
+    <div class="ticket-card"
+         id="ticketSection">
+
+        <div class="ticket-header">
+
+            <h1>YatraGo Bus Ticket</h1>
+
+            <span class="ticket-status">
+                Confirmed
+            </span>
+
+        </div>
+
+        <div class="ticket-body">
+
+            <div class="ticket-info">
+
+                <p>
+                    <strong>Booking ID:</strong>
+                    @Model.BookingId
+                </p>
+
+                <p>
+                    <strong>Bus:</strong>
+                    @Model.BusName
+                </p>
+
+                <p>
+                    <strong>Route:</strong>
+                    @Model.Source
+                    →
+                    @Model.Destination
+                </p>
+
+                <p>
+                    <strong>Journey Date:</strong>
+                    @Model.JourneyDate.ToString("dd-MM-yyyy")
+                </p>
+
+                <p>
+                    <strong>Total Amount:</strong>
+                    ₹ @Model.TotalAmount
+                </p>
+
+                <p>
+                    <strong>Booked On:</strong>
+                    @Model.BookingDate.ToString("dd-MM-yyyy hh:mm tt")
+                </p>
+
+            </div>
+
+            <hr />
+
+            <h2>Passenger Details</h2>
+
+            <table class="ticket-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Name</th>
+
+                        <th>Age</th>
+
+                        <th>Gender</th>
+
+                        <th>Seat</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var passenger in Model.Passengers)
+                    {
+                        <tr>
+
+                            <td>
+                                @passenger.PassengerName
+                            </td>
+
+                            <td>
+                                @passenger.Age
+                            </td>
+
+                            <td>
+                                @passenger.Gender
+                            </td>
+
+                            <td>
+                                @passenger.SeatNumber
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <button onclick="window.print()"
+            class="download-btn">
+        Download Ticket
+    </button>
+
+</div>

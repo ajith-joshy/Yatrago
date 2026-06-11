@@ -1,0 +1,68 @@
+﻿@{
+    var currentController =
+    ViewContext.RouteData.Values["controller"]?.ToString();
+
+    var currentAction =
+    ViewContext.RouteData.Values["action"]?.ToString();
+}
+
+<nav class="navbar">
+
+    <!-- LEFT SIDE -->
+
+    <div class="left-nav">
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <img src="~/images/logo.jpg"
+                 alt="logo">
+
+            <h2>YatraGo</h2>
+
+        </div>
+
+        <!-- NAV LINKS -->
+
+        <div class="nav-links">
+
+            <a href="/#home">Home</a>
+
+            <a href="/#about">About Us</a>
+
+            <a href="/#contact">Contact Us</a>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+
+    <div class="auth-links">
+
+        @if (!(currentController == "Account" &&
+               currentAction == "SignIn"))
+        {
+            <a asp-controller="Account"
+               asp-action="SignIn">
+
+                Sign In
+
+            </a>
+        }
+
+        @if (!(currentController == "Account" &&
+               currentAction == "SignUp"))
+        {
+            <a asp-controller="Account"
+               asp-action="SignUp">
+
+                Sign Up
+
+            </a>
+        }
+
+    </div>
+
+</nav>
