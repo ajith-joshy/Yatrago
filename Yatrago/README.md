@@ -16,6 +16,7 @@ YatraGo is an online bus ticket booking system developed using ASP.NET Core MVC 
 - Manage buses, routes, users, and bookings
 - Reports and revenue analysis
 - Live buses section
+- Reset Password(only for users)
 
 # Technologies Used
 
@@ -31,3 +32,8 @@ YatraGo is an online bus ticket booking system developed using ASP.NET Core MVC 
 # Database
 
 The project uses SQL Server with stored procedures and normalized tables.
+
+#Default Admin Credentials
+
+Username: admin
+Password: admin123

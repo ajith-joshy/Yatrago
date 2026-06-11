@@ -1,6 +1,8 @@
+/*
 SET STATISTICS IO ON;
 SET STATISTICS TIME ON;
 GO
+*/
 
 
 /*
@@ -30,4 +32,6 @@ ON dbo.Users(CreatedAt DESC);
 EXEC dbo.SP_GetUsers;
 */
 
+/*
 EXEC sp_helpindex 'PassengerDetails';
+*/

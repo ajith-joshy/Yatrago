@@ -16,19 +16,6 @@ CREATE TABLE Admin
 */
 
 /*
-INSERT INTO Admin
-(
-    Username,
-    Password
-)
-VALUES
-(
-    'admin',
-    'admin123'
-);
-*/
-
-/*
 SELECT * FROM Admin;
 */
 
@@ -637,4 +624,27 @@ ON dbo.Users(CityId);
 /*
 CREATE NONCLUSTERED INDEX IX_Cities_StateId
 ON dbo.Cities(StateId);
+*/
+
+/*
+IF NOT EXISTS
+(
+    SELECT 1
+    FROM dbo.Admin
+)
+BEGIN
+
+    INSERT INTO dbo.Admin
+    (
+        Username,
+        Password
+    )
+    VALUES
+    (
+        'admin',
+
+        '$2a$12$sq2eYWuvmkYpr7YLfVr0N.gYVnQpEm.NMOy9zLidZmxe2/hB.KbKa'
+    );
+
+END
 */
