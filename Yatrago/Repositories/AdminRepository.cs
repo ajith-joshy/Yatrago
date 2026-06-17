@@ -27,84 +27,73 @@ namespace YatraGo.Repository
         }
 
         public Admin ValidateAdmin
-        (
-            string username,
-            string password
-        )
+(
+    string username,
+    string password
+)
         {
-            try
+            using (SqlConnection con =
+                   new SqlConnection(_connectionString))
             {
-                Admin admin = null;
+                SqlCommand cmd =
+                new SqlCommand
+                (
+                    "SP_AdminLogin",
+                    con
+                );
 
-                using (SqlConnection con =
-                new SqlConnection(_connectionString))
+                cmd.CommandType =
+                CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue
+                (
+                    "@Username",
+                    username
+                );
+
+                con.Open();
+
+                SqlDataReader reader =
+                cmd.ExecuteReader();
+
+                if (reader.Read())
                 {
-                    SqlCommand cmd =
-                    new SqlCommand
-                    (
-                        "SP_AdminLogin",
-                        con
-                    );
+                    string storedHash =
+                    reader["Password"].ToString();
 
-                    cmd.CommandType =
-                    CommandType.StoredProcedure;
-
-                    cmd.Parameters.AddWithValue
-                    (
-                        "@Username",
-                        username
-                    );
-
-                    con.Open();
-
-                    SqlDataReader reader =
-                    cmd.ExecuteReader();
-
-                    if (reader.Read())
+                    Admin admin =
+                    new Admin
                     {
-                        string storedHash =
-                        reader["Password"]
-                        .ToString();
-
-                        PasswordHasher<Admin> hasher =
-                        new PasswordHasher<Admin>();
-
-                        admin = new Admin
-                        {
-                            AdminId =
-                            Convert.ToInt32
-                            (
-                                reader["AdminId"]
-                            ),
-
-                            Username =
-                            reader["Username"]
-                            .ToString()
-                        };
-
-                        var result =
-                        hasher.VerifyHashedPassword
+                        AdminId =
+                        Convert.ToInt32
                         (
-                            admin,
-                            storedHash,
-                            password
-                        );
+                            reader["AdminId"]
+                        ),
 
-                        if (result ==
+                        Username =
+                        reader["Username"].ToString()
+                    };
+
+                    PasswordHasher<Admin> hasher =
+                    new PasswordHasher<Admin>();
+
+                    var result =
+                    hasher.VerifyHashedPassword
+                    (
+                        admin,
+                        storedHash,
+                        password
+                    );
+
+                    if (result ==
                         PasswordVerificationResult.Success)
-                        {
-                            return admin;
-                        }
+                    {
+                        return admin;
                     }
                 }
-
-                return null;
             }
 
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return null;
         }
 
         public void UpdateLastLogin

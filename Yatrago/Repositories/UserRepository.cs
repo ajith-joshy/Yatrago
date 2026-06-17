@@ -123,7 +123,7 @@ namespace YatraGo.Repositories
         }
 
 
-public User ValidateUser
+        public User ValidateUser
         (
             string username,
             string password
