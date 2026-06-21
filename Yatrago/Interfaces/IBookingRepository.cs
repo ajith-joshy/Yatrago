@@ -1,4 +1,5 @@
-﻿using YatraGo.Models;
+﻿using Yatrago.Models;
+using YatraGo.Models;
 
 namespace YatraGo.Interfaces
 {
@@ -49,5 +50,12 @@ namespace YatraGo.Interfaces
         int GetBookingsCount();
 
         TicketViewModel GetTicketDetails(int bookingId);
+
+        List<Booking>
+        FilterBookings
+        (
+            int? routeId,
+            int? busId
+        );
     }
 }

@@ -811,5 +811,106 @@ namespace YatraGo.Repositories
                 );
             }
         }
+
+        public List<Booking> FilterBookings
+        (
+            int? routeId,
+            int? busId
+        )
+        {
+            try
+            {
+                List<Booking> bookings =
+                new List<Booking>();
+
+                using SqlConnection con =
+                new SqlConnection(_connectionString);
+
+                SqlCommand cmd =
+                new SqlCommand
+                (
+                    "SP_FilterBookings",
+                    con
+                );
+
+                cmd.CommandType =
+                CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue
+                (
+                    "@RouteId",
+                    (object?)routeId ?? DBNull.Value
+                );
+
+                cmd.Parameters.AddWithValue
+                (
+                    "@BusId",
+                    (object?)busId ?? DBNull.Value
+                );
+
+                con.Open();
+
+                SqlDataReader reader =
+                cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    bookings.Add
+                    (
+                        new Booking
+                        {
+                            BookingId =
+                            Convert.ToInt32(reader["BookingId"]),
+
+                            Username =
+                            reader["Username"].ToString()!,
+
+                            BusName =
+                            reader["BusName"].ToString()!,
+
+                            BusNumber =
+                            reader["BusNumber"].ToString()!,
+
+                            Source =
+                            reader["Source"].ToString()!,
+
+                            Destination =
+                            reader["Destination"].ToString()!,
+
+                            JourneyDate =
+                            Convert.ToDateTime
+                            (
+                                reader["JourneyDate"]
+                            ),
+
+                            SeatNumbers =
+                            reader["SeatNumbers"].ToString()!,
+
+                            TotalAmount =
+                            Convert.ToDecimal
+                            (
+                                reader["TotalAmount"]
+                            ),
+
+                            BookingStatus =
+                            reader["BookingStatus"].ToString()!,
+
+                            CreatedAt =
+                            Convert.ToDateTime
+                            (
+                                reader["CreatedAt"]
+                            )
+                        }
+                    );
+                }
+
+                return bookings;
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

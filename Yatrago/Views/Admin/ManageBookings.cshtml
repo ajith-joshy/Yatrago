@@ -6,6 +6,26 @@
 
 <h1>Manage Bookings</h1>
 
+<form method="get" class="booking-filter">
+
+    <select name="routeId" asp-items="ViewBag.Routes">
+        <option value="">All Routes</option>
+    </select>
+
+    <select name="busId" asp-items="ViewBag.Buses">
+        <option value="">All Buses</option>
+    </select>
+
+    <button type="submit">
+        Search
+    </button>
+
+    <a asp-action="ManageBookings">
+        Reset
+    </a>
+
+</form>
+
 <div class="table-container">
 
     <table class="bus-table">

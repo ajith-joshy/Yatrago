@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using YatraGo.Interfaces;
 using YatraGo.Models;
@@ -694,8 +695,11 @@ namespace Yatrago.Controllers
         }
 
 
-        [HttpGet]
-        public IActionResult ManageBookings()
+        public IActionResult ManageBookings
+        (
+            int? routeId,
+            int? busId
+        )
         {
             if (!IsAdminLoggedIn())
             {
@@ -705,23 +709,49 @@ namespace Yatrago.Controllers
                     "Account"
                 );
             }
+
             try
             {
-                var bookings =
-                _bookingRepository.GetAllBookings();
+                ViewBag.Routes = _routeRepository.GetRoutes()
+                    .Select(r => new SelectListItem
+                    {
+                        Value = r.RouteId.ToString(),
+                        Text = $"{r.Source} - {r.Destination}",
+                        Selected = routeId == r.RouteId
+                    });
+
+                ViewBag.Buses = _busRepository.GetBuses()
+                    .Select(b => new SelectListItem
+                    {
+                        Value = b.BusId.ToString(),
+                        Text = b.BusName,
+                        Selected = busId == b.BusId
+                    });
+
+                List<Booking> bookings;
+
+                if (routeId == null &&
+                    busId == null)
+                {
+                    bookings =
+                    _bookingRepository.GetAllBookings();
+                }
+                else
+                {
+                    bookings =
+                    _bookingRepository.FilterBookings
+                    (
+                        routeId,
+                        busId
+                    );
+                }
 
                 return View(bookings);
             }
 
             catch (Exception ex)
             {
-                TempData["Message"] =
-                ex.Message;
-
-                return RedirectToAction
-                (
-                    "Dashboard"
-                );
+                return Content(ex.ToString());
             }
         }
 
